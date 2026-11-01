@@ -43,7 +43,7 @@ flowchart TD
         G -->|Out of Scope / Private Deployment| I["Escalation Trigger: escalation_required = true"]
     end
 
-    subgraph Structured Payload Formatting & Egress
+    subgraph Structured Payload Formatting 
         H --> J[Structured JSON Contract Validator]
         I --> J
         J -->|Webhook Dispatch| K[Downstream Routing: Slack / Discord / Jira Service Desk]
