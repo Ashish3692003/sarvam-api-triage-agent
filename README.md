@@ -96,6 +96,7 @@ The **Sarvam API Triage & DevRel Agent** sits between incoming questions and the
   "technical_response": "Air-gapped on-premise deployments and custom high-volume pricing require custom enterprise agreements not covered in public documentation. This request has been flagged for the Enterprise Solutions and Sales Architecture team."
 }
 ```
+<img width="1911" height="871" alt="Screenshot 2026-09-06 212257" src="https://github.com/user-attachments/assets/daecc322-eb52-4c61-ba69-0bac226766ff" />
 
 ---
 
