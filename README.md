@@ -23,8 +23,6 @@ The **Sarvam API Triage & DevRel Agent** sits between incoming questions and the
 
 ---
 
-## How It Works
-
 ## 🏗️ End-to-End System Architecture
 
 ```mermaid
@@ -50,7 +48,18 @@ flowchart TD
         I --> J
         J -->|Webhook Dispatch| K[Downstream Routing: Slack / Discord / Jira Service Desk]
     end
+```
 
+## Pipeline Breakdown
+
+1. **Ingestion & Trigger Layer:** Ingests raw developer inquiries originating from community channels (Discord, Slack, Discourse) or API gateway webhook payloads into the Lyzr agent runtime.
+2. **Persona Identification & Intent Routing:** Evaluates query semantics to classify the user into target personas (`developer`, `enterprise_architect`, or `product_lead`), establishing whether the response should prioritize executable code, architectural compliance, or business escalation.
+3. **Urgency & SLA Triage Matrix:** Evaluates technical severity against predetermined priority tiers—`P0_critical` (production authentication failures or outages), `P1_enterprise_escalation` (high-volume commercial inquiries or dedicated infrastructure requests), and `P2_routine_inquiry` (standard syntax, parameters, and quickstart guides).
+4. **Knowledge Retrieval Layer (`kb_sarvam_dev_docs`):** Executes semantic similarity search strictly against official Sarvam developer documentation, pulling validated endpoints and schemas for Speech-to-Text (Saaras), Text-to-Speech (Bulbul), Translation, and Language Identification.
+5. **Deterministic Boundary Logic (Zero Hallucination):** Runs a coverage verification check against retrieved documentation. If a request involves undocumented parameters, unreleased features, or custom enterprise terms, the engine strictly suppresses generative speculation, tags `escalation_required: true`, and assigns a specific `escalation_reason`.
+6. **Structured JSON Output & Egress Dispatch:** Normalizes all triage flags, generated explanations, and escalation metadata into a machine-readable JSON schema, enabling automated handoffs to customer support desks, engineering ticketing, or alerting bots without manual formatting.
+
+---
 
 ## Key Features
 
