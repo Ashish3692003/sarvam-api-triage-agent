@@ -29,7 +29,7 @@ The **Sarvam API Triage & DevRel Agent** sits between incoming questions and the
 flowchart TD
     A[Inbound Developer Query: Discord / Slack / Webhook] --> B[Lyzr Agent Reasoning Engine]
 
-    subgraph Ingestion & Triage Matrix
+    |subgraph Ingestion & Triage Matrix|
         B -->|Step 1: Role Analysis| C["Persona Classifier: developer | enterprise_architect | product_lead"]
         B -->|Step 2: Urgency Triage| D["Priority Evaluator: P0_critical | P1_enterprise_escalation | P2"]
         C --> E[Context Aggregator & Intent Normalizer]
