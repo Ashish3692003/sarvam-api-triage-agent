@@ -25,36 +25,31 @@ The **Sarvam API Triage & DevRel Agent** sits between incoming questions and the
 
 ## How It Works
 
-```text
-[ Incoming Community / Developer Query ]
-                    │
-                    ▼
-┌────────────────────────────────────────────────────────┐
-│               Lyzr Agent Studio Core                   │
-│                                                        │
-│  1. Identify Persona                                   │
-│     (developer | enterprise_architect | product_lead)  │
-│                                                        │
-│  2. Classify Urgency                                   │
-│     (P0_critical | P1_enterprise_escalation | P2)      │
-│                                                        │
-│  3. Retrieve Grounded Documentation                    │
-│     Knowledge Base: kb_sarvam_dev_docs                 │
-│     (Speech-to-Text, Translation, TTS, Auth)           │
-│                                                        │
-│  4. Enforce Boundary Logic                             │
-│     Is the answer documented in public docs?           │
-│     ├── YES ──► Generate grounded technical response   │
-│     └── NO  ──► Set escalation_required = true         │
-└────────────────────────────────────────────────────────┘
-                    │
-                    ▼
-┌────────────────────────────────────────────────────────┐
-│              Structured JSON Output                    │
-│  Ready for webhook dispatch to Discord, Slack, or Jira │
-└────────────────────────────────────────────────────────┘
-```
+## 🏗️ End-to-End System Architecture
 
+```mermaid
+flowchart TD
+    A[Inbound Developer Query: Discord / Slack / Webhook] --> B[Lyzr Agent Reasoning Engine]
+
+    subgraph Ingestion & Triage Matrix
+        B -->|Step 1: Role Analysis| C["Persona Classifier: developer | enterprise_architect | product_lead"]
+        B -->|Step 2: Urgency Triage| D["Priority Evaluator: P0_critical | P1_enterprise_escalation | P2"]
+        C --> E[Context Aggregator & Intent Normalizer]
+        D --> E
+    end
+
+    subgraph Grounded RAG & Boundary Guardrails
+        E -->|Vector Search Query| F[("Knowledge Base: kb_sarvam_dev_docs")]
+        F -->|Saaras STT / Bulbul TTS / Translation Specs| G{"Documentation Coverage Check"}
+        G -->|Documented Feature| H[Deterministic Grounded Code & Solution]
+        G -->|Out of Scope / Private Deployment| I["Escalation Trigger: escalation_required = true"]
+    end
+
+    subgraph Structured Payload Formatting & Egress
+        H --> J[Structured JSON Contract Validator]
+        I --> J
+        J -->|Webhook Dispatch| K[Downstream Routing: Slack / Discord / Jira Service Desk]
+    end
 ---
 
 ## Key Features
