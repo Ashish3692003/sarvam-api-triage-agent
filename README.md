@@ -50,7 +50,6 @@ flowchart TD
         I --> J
         J -->|Webhook Dispatch| K[Downstream Routing: Slack / Discord / Jira Service Desk]
     end
----
 
 
 ## Key Features
