@@ -52,6 +52,7 @@ flowchart TD
     end
 ---
 
+
 ## Key Features
 
 * **Grounded in Official Documentation:** Retrieval is strictly tied to `kb_sarvam_dev_docs`, covering Sarvam's speech-to-text (Saaras), text-to-speech (Bulbul), translation, and document intelligence models.
